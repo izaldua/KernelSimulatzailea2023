@@ -1,6 +1,6 @@
 #ifndef CLOCK_H
 #define CLOCK_H
 
-extern void *clock();
+extern void *erlojua();
 
 #endif /* CLOCK_H */
