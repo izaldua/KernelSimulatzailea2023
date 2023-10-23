@@ -14,7 +14,9 @@ void *erlojua()
     {
         pthread_mutex_lock(&mutex);
         while (done < TENP_KOP)
+        {
             pthread_cond_wait(&cond1, &mutex);
+        }
         done = 0;
         pthread_cond_broadcast(&cond2);
         pthread_mutex_unlock(&mutex);

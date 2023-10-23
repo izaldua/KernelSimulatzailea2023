@@ -12,13 +12,21 @@ sem_t sem_pg;
 
 void *timer_SD()
 {
+    int frek = 0;
+    int ticksd = 0;
     printf("# Timer Scheduler: Ondo iritsi naiz timer-era.\n");
+    pthread_mutex_lock(&mutex);
     while (1)
     {
         done++;
-        pthread_mutex_lock(&mutex);
-
-        sem_post(&sem_sc);
+        ticksd++;
+        while (frek < 10000){
+            frek++;
+        }
+        //sem_post(&sem_sc);
+            printf("\ntickSD : %d", ticksd);
+            fflush(stdout);
+        frek = 0;
 
         pthread_cond_signal(&cond1);
         pthread_cond_wait(&cond2, &mutex);
@@ -28,12 +36,20 @@ void *timer_SD()
 void *timer_PG()
 {
     printf("# Timer Process Generator: Ondo iritsi naiz timer-era.\n");
+    int frek = 0;
+    int tickpg = 0;
+    pthread_mutex_lock(&mutex);
     while (1)
     {
         done++;
-        pthread_mutex_lock(&mutex);
-
-        sem_post(&sem_pg);
+        tickpg++;
+        while (frek < 10000){
+            frek++;
+        }
+        //sem_post(&sem_pg);
+         printf("\ntickPG : %d", tickpg);
+         fflush(stdout);
+        frek = 0;
 
         pthread_cond_signal(&cond1);
         pthread_cond_wait(&cond2, &mutex);

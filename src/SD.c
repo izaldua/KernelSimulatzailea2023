@@ -10,12 +10,13 @@ void *scheduler()
 {
 
     int tick = 0;
-
     while (1)
     {
         sem_wait(&sem_sc);
 
-        printf("\nSD : %d", tick);
-        tick++;
+//        printf("\nSD : %d", tick);
+//        fflush(stdout);
+//        
+//        tick++;
     }
 }
