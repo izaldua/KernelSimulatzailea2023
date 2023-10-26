@@ -6,6 +6,7 @@
 #include "../include/timer.h"
 #include "../include/SD.h"
 #include "../include/PG.h"
+#include "../include/DataEgiturak.h"
 
 int done = 0;
 int freq;
@@ -33,6 +34,10 @@ int main(int argc, char *argv[])
     }*/
 
     printf("\n\n===========SISTEMA ONDO HASIERATUA===========\n\n");
+
+    /*Gure ilara sortu eta abiarazi*/
+    struct ProcessQueue queue;
+    initQueue(&queue);
 
     pthread_mutex_init(&mutex, NULL);
     printf("Mutexa ondo hasieratu da\n");
