@@ -5,28 +5,49 @@
 
 #include "../include/DataEgiturak.h"
 
-void initQueue(struct ProcessQueue *queue){
+void initQueue(struct ProcessQueue *queue)
+{
     queue->first = NULL;
     queue->last = NULL;
     queue->n = 0;
 }
 
-void enqueue(struct PCB *pcb)
+void enqueue(struct PCB *newpcb, struct ProcessQueue *queue)
 {
+    newpcb->next == NULL;
+    if (queue->first == NULL)
+        queue->first = newpcb;
+    else
+    {
+        queue->last->next = newpcb;
+        queue->last = newpcb;
+    }
+    queue->n++;
 }
 
-void dequeue()
+struct PCB dequeue(struct ProcessQueue *queue)
 {
+    struct PCB lag = {NULL, NULL, NULL};
+    if (queue->first == NULL)
+        return lag;
+    else
+    {
+        lag = *queue->first;
+        queue->first = queue->first->next;
+    }
+    queue->n--;
 }
 
-struct PCB peek()
+struct PCB peek(struct ProcessQueue *queue)
 {
+    struct PCB lag = {NULL, NULL, NULL};
+    if (queue->first == NULL)
+        return lag;
+    else
+        return *queue->first;
 }
 
-int isFull()
+int isEmpty(struct ProcessQueue *queue)
 {
-}
-
-int isEmpty()
-{
+    return queue->first == NULL;
 }

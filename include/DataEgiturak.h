@@ -49,4 +49,10 @@ struct CPU;
 struct Core;
 struct Machine;
 
+void initQueue(struct ProcessQueue *queue);
+void enqueue(struct PCB *newpcb, struct ProcessQueue *queue);
+struct PCB dequeue(struct ProcessQueue *queue);
+struct PCB peek(struct ProcessQueue *queue);
+int isEmpty(struct ProcessQueue *queue);
+
 #endif /* DATAEGITURAK_H */

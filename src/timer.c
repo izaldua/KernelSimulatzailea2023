@@ -20,12 +20,11 @@ void *timer_SD()
     {
         done++;
         ticksd++;
-        while (frek < 10000){
+        while (frek < 10000)
+        {
             frek++;
         }
-        //sem_post(&sem_sc);
-            printf("\ntickSD : %d", ticksd);
-            fflush(stdout);
+        sem_post(&sem_sc);
         frek = 0;
 
         pthread_cond_signal(&cond1);
@@ -43,12 +42,11 @@ void *timer_PG()
     {
         done++;
         tickpg++;
-        while (frek < 10000){
+        while (frek < 10000)
+        {
             frek++;
         }
-        //sem_post(&sem_pg);
-         printf("\ntickPG : %d", tickpg);
-         fflush(stdout);
+        sem_post(&sem_pg);
         frek = 0;
 
         pthread_cond_signal(&cond1);

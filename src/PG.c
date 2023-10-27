@@ -9,13 +9,13 @@
 void *processGenerator()
 {
 
-   // int tick = 0;
+    int tick = 0;
     while (1)
     {
         sem_wait(&sem_pg);
-        //
-        //        printf("\nPG : %d", tick);
-        //        fflush(stdout);
-        //        tick++;
+
+        printf("\nPG : %d", tick);
+
+        tick++;
     }
 }
