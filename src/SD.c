@@ -14,9 +14,8 @@ void *scheduler()
     {
         sem_wait(&sem_sc);
 
-//        printf("\nSD : %d", tick);
-//        fflush(stdout);
-//        
-//        tick++;
+        printf("\nSD : %d", tick);
+
+        tick++;
     }
 }
