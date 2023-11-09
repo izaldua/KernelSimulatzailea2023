@@ -4,7 +4,6 @@
 struct ProcessQueue
 {
     struct PCB *first;
-    struct PCB *last;
     int n;
 };
 
