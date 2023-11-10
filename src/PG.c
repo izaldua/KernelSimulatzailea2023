@@ -15,6 +15,7 @@ void *processGenerator()
         sem_wait(&sem_pg);
 
         printf("\nPG : %d", tick);
+        usleep(PGF);
 
         tick++;
     }

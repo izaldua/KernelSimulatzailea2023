@@ -15,4 +15,8 @@ extern sem_t sem_pg;
 extern int done;
 extern int freq;
 
+extern long clockF;
+extern long SDF;
+extern long PGF;
+
 #endif /* CONFIG_H */

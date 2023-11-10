@@ -15,6 +15,7 @@ void *scheduler()
         sem_wait(&sem_sc);
 
         printf("\nSD : %d", tick);
+        usleep(SDF);
 
         tick++;
     }

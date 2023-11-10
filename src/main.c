@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <pthread.h>
 
 #include "../include/config.h"
@@ -11,6 +12,8 @@
 int done = 0;
 int freq;
 
+long clockF, SDF, PGF;
+
 pthread_t cl, timSD, timPG, tSD, tPG;
 
 pthread_mutex_t mutex;
@@ -20,24 +23,30 @@ pthread_cond_t cond1, cond2;
 int main(int argc, char *argv[])
 {
 
-    /*if (argc != 2)
+    
+    if (argc != 4)
     {
         printf("Argumentuak ez dira ondo pasatu\n\n");
         printf("========================= Argumentuak nola pasa =========================\n\n");
-        printf("./seso <clock frequency>\n\n");
+        printf("./seso <clock frequency> <Scheduler frequency> <Process Generator>\n\n");
+        printf("Erloju, Scheduler eta Process Generator-aren frekuentzia ms-tan hartuko da.\n\n");
+        printf("Frekuentzia = (Sartutako datua) * 1000");
         printf("=========================================================================\n\n");
         return 1;
     }
     else
     {
-        long freq = strtol(argv[1], NULL, 10);
-    }*/
+        clockF = 1000.0 * strtol(argv[1], NULL, 10);
+        SDF = 1000.0 * strtol(argv[2], NULL, 10);
+        PGF = 1000.0 * strtol(argv[3], NULL, 10);
+    }
+    
 
     printf("\n\n===========SISTEMA ONDO HASIERATUA===========\n\n");
 
     /*Gure ilara sortu eta abiarazi*/
-    //struct ProcessQueue queue;
-    //initQueue(&queue);
+    struct ProcessQueue queue;
+    initQueue(&queue);
 
     pthread_mutex_init(&mutex, NULL);
     printf("Mutexa ondo hasieratu da\n");

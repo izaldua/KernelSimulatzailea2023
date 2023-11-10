@@ -6,7 +6,7 @@
 #include "../include/DataEgiturak.h"
 
 void initQueue(struct ProcessQueue *queue){
-    struct PCB pcb = {NULL, 0, 0};
+    struct PCB pcb = {NULL, 0, 0, 0, 0};
     queue->first = &pcb;
     queue->n = 0;
 }
@@ -15,12 +15,14 @@ void enqueue(struct ProcessQueue *queue, struct PCB *pcb)
 {
     pcb->next = queue->first;
     queue->first = pcb;
+    queue->n++;
 }
 
 struct PCB dequeue(struct ProcessQueue *queue, struct PCB *pcb)
 {
     struct PCB lag = *(queue->first);
     queue->first = queue->first->next;
+    queue->n--;
     return lag;
 }
 
