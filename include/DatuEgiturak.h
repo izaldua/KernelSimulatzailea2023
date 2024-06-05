@@ -1,12 +1,13 @@
-#ifndef DATAEGITURAK_H
-#define DATAEGITURAK_H
+#ifndef DatuEgiturak_H
+#define DatuEgiturak_H
 
 /**
  * @brief Gure PCB guztiak gordeko dituen ilara bakarra.
 */
-struct ProcessQueue
+extern struct ProcessQueue
 {
     struct PCB *first; /**< Ilararen lehen PCB-aren helbidea. */
+    struct PCB *last;
     int n; /**< Gure ilarak gordeta dituen PCB kopurua*/
 };
 
@@ -17,6 +18,7 @@ struct PCB
     int state;
     int priority; // Prozesu bakoitzaren niece-a izango da hau
     int quantum; // Quantuma, jakiteko prozesiu bakoitza zenbat denbora segidan egon leiken prozesadorean, hau aldatzen joango da
+    int TTL;
     // int PC;
     // int Context Data;
     // int Memory;
@@ -54,8 +56,8 @@ struct Machine;
 
 void initQueue(struct ProcessQueue *queue);
 void enqueue(struct ProcessQueue *queue, struct PCB *pcb);
-struct PCB dequeue(struct ProcessQueue *queue, struct PCB *pcb);
-struct PCB peek(struct ProcessQueue *queue, struct PCB *pcb);
+struct PCB* dequeue(struct ProcessQueue *queue, struct PCB *pcb);
+struct PCB* peek(struct ProcessQueue *queue, struct PCB *pcb);
 int isEmpty(struct ProcessQueue *queue);
 
-#endif /* DATAEGITURAK_H */
+#endif /* DatuEgiturak_H */

@@ -7,12 +7,12 @@
 #include "../include/timer.h"
 #include "../include/SD.h"
 #include "../include/PG.h"
-#include "../include/DataEgiturak.h"
+#include "../include/DatuEgiturak.h"
 
 int done = 0;
 int freq;
 
-long clockF, SDF, PGF;
+long clockF, SDF, PGF, TTL;
 
 pthread_t cl, timSD, timPG, tSD, tPG;
 
@@ -23,14 +23,13 @@ pthread_cond_t cond1, cond2;
 int main(int argc, char *argv[])
 {
 
-    
-    if (argc != 4)
+    if (argc != 5)
     {
-        printf("Argumentuak ez dira ondo pasatu\n\n");
+        printf("Argumentuak ez dira ondo pasa\n\n");
         printf("========================= Argumentuak nola pasa =========================\n\n");
-        printf("./seso <clock frequency> <Scheduler frequency> <Process Generator>\n\n");
+        printf("./seso <clock frequency> <Scheduler frequency> <Process Generator frequency> <process TTL in s>\n\n");
         printf("Erloju, Scheduler eta Process Generator-aren frekuentzia ms-tan hartuko da.\n\n");
-        printf("Frekuentzia = (Sartutako datua) * 1000");
+        printf("Frekuentzia = (Sartutako datua) * 1000\n\n");
         printf("=========================================================================\n\n");
         return 1;
     }
@@ -39,6 +38,7 @@ int main(int argc, char *argv[])
         clockF = 1000.0 * strtol(argv[1], NULL, 10);
         SDF = 1000.0 * strtol(argv[2], NULL, 10);
         PGF = 1000.0 * strtol(argv[3], NULL, 10);
+        TTL = strtol(argv[4], NULL, 10);
     }
     
 
@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
 
     /*Gure ilara sortu eta abiarazi*/
     struct ProcessQueue queue;
+    int id = 0;
     initQueue(&queue);
 
     pthread_mutex_init(&mutex, NULL);

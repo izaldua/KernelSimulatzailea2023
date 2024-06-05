@@ -18,5 +18,8 @@ extern int freq;
 extern long clockF;
 extern long SDF;
 extern long PGF;
+extern int TTL;
+
+extern int id;
 
 #endif /* CONFIG_H */
