@@ -19,12 +19,14 @@ struct PCB* processCreate(int id, int state, int priority, int quantum, int TTL)
     pcb->id = id;
     pcb->state = state;
     pcb->priority = priority;
-    pcb->quantum = quantum;
-    pcb->TTL = TTL;
+    pcb->quantum = 1;
+    pcb->TTL = rand() % TTL;
     pcb->next = NULL;
 
     return pcb;
 } 
+
+int id = 1; // id-ak esleitzeko nondik hasi behar den adieraztun du
 
 void *processGenerator()
 {
@@ -34,8 +36,8 @@ void *processGenerator()
     {
         sem_wait(&sem_pg);
 
-        printf("\nPG : %d", tick);
-        if (id < 100){
+        //printf("\nPG : %d", tick);
+        if (id < 5){
             struct PCB *pcb = processCreate(id, 0, 0, 0, TTL);
             enqueue(&queue, pcb);
             id++;

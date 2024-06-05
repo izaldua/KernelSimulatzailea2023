@@ -12,7 +12,8 @@
 int done = 0;
 int freq;
 
-long clockF, SDF, PGF, TTL;
+long clockF, SDF, PGF;
+int TTL;
 
 pthread_t cl, timSD, timPG, tSD, tPG;
 
@@ -27,7 +28,7 @@ int main(int argc, char *argv[])
     {
         printf("Argumentuak ez dira ondo pasa\n\n");
         printf("========================= Argumentuak nola pasa =========================\n\n");
-        printf("./seso <clock frequency> <Scheduler frequency> <Process Generator frequency> <process TTL in s>\n\n");
+        printf("./seso <clock frequency> <Scheduler frequency> <Process Generator frequency> <process TTL max in s>\n\n");
         printf("Erloju, Scheduler eta Process Generator-aren frekuentzia ms-tan hartuko da.\n\n");
         printf("Frekuentzia = (Sartutako datua) * 1000\n\n");
         printf("=========================================================================\n\n");
@@ -41,13 +42,27 @@ int main(int argc, char *argv[])
         TTL = strtol(argv[4], NULL, 10);
     }
     
+    if (TTL < 20)
+    {
+        printf("TTLa 20 baino handiagoa izan behar da\n");
+        return 1;
+    } 
 
     printf("\n\n===========SISTEMA ONDO HASIERATUA===========\n\n");
 
     /*Gure ilara sortu eta abiarazi*/
-    struct ProcessQueue queue;
-    int id = 0;
+    //struct ProcessQueue queue;
     initQueue(&queue);
+
+    //beste prozesu bat sartu
+    struct PCB *pcb1 = (struct PCB *)malloc(sizeof(struct PCB));
+    pcb1->id = 0;
+    pcb1->state = 0;
+    pcb1->priority = 0;
+    pcb1->quantum = 1;
+    pcb1->TTL = TTL;
+
+    enqueue(&queue, pcb1);
 
     pthread_mutex_init(&mutex, NULL);
     printf("Mutexa ondo hasieratu da\n");
@@ -72,12 +87,12 @@ int main(int argc, char *argv[])
         perror("Failed to create threads");
     }
 
-    if (pthread_create(&tPG, NULL, (void *)processGenerator, NULL) != 0)
+    if (pthread_create(&tPG, NULL, (void *)processGenerator, &queue) != 0)
     {
         perror("Failed to create threads");
     }
 
-    if (pthread_create(&tSD, NULL, (void *)scheduler, NULL) != 0)
+    if (pthread_create(&tSD, NULL, (void *)scheduler, &queue) != 0)
     {
         perror("Failed to create threads");
     }

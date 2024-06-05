@@ -20,6 +20,6 @@ extern long SDF;
 extern long PGF;
 extern int TTL;
 
-extern int id;
+//extern struct ProcessQueue queue;
 
 #endif /* CONFIG_H */

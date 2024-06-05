@@ -4,7 +4,9 @@
 /**
  * @brief Gure PCB guztiak gordeko dituen ilara bakarra.
 */
-extern struct ProcessQueue
+
+extern struct ProcessQueue queue;
+struct ProcessQueue
 {
     struct PCB *first; /**< Ilararen lehen PCB-aren helbidea. */
     struct PCB *last;
@@ -54,10 +56,14 @@ struct CPU;
 struct Core;
 struct Machine;
 
+void aldatuTTL(struct ProcessQueue *queue, int TTL);
+void aldatuQuantum(struct ProcessQueue *queue);
+
 void initQueue(struct ProcessQueue *queue);
 void enqueue(struct ProcessQueue *queue, struct PCB *pcb);
-struct PCB* dequeue(struct ProcessQueue *queue, struct PCB *pcb);
-struct PCB* peek(struct ProcessQueue *queue, struct PCB *pcb);
+struct PCB* dequeue(struct ProcessQueue *queue);
+struct PCB* peek(struct ProcessQueue *queue);
 int isEmpty(struct ProcessQueue *queue);
+void moveBack(struct ProcessQueue *queue);
 
 #endif /* DatuEgiturak_H */

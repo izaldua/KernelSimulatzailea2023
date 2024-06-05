@@ -5,6 +5,19 @@
 
 #include "../include/DatuEgiturak.h"
 
+struct ProcessQueue queue;
+
+void aldatuTTL(struct ProcessQueue *queue, int TTL)
+{
+    queue->first->TTL = TTL;
+} 
+
+void aldatuQuantum(struct ProcessQueue *queue)
+{
+    if (queue->first->quantum < 32)queue->first->quantum = queue->first->quantum*2;
+    else queue->first->quantum = 32;
+}
+
 void initQueue(struct ProcessQueue *queue){
     struct PCB *nullProcess = (struct PCB *)malloc(sizeof(struct PCB));
     nullProcess->next = NULL;
@@ -32,7 +45,7 @@ void enqueue(struct ProcessQueue *queue, struct PCB *pcb)
     queue->n++;
 }
 
-struct PCB* dequeue(struct ProcessQueue *queue, struct PCB *pcb)
+struct PCB* dequeue(struct ProcessQueue *queue)
 {
     if(queue->first->id == -1 && queue->last->id == -1) return NULL;
     
@@ -43,7 +56,7 @@ struct PCB* dequeue(struct ProcessQueue *queue, struct PCB *pcb)
     return lag;
 }
 
-struct PCB* peek(struct ProcessQueue *queue, struct PCB *pcb)
+struct PCB* peek(struct ProcessQueue *queue)
 {
     return queue->first;
 }
@@ -59,4 +72,15 @@ int isEmpty(struct ProcessQueue *queue)
 {
     if(queue->first->id == -1 && queue->last->id == -1) return 1;
     else return 0;
+}
+
+
+void moveBack(struct ProcessQueue *queue)
+{
+    struct PCB *lag = queue->first;
+    struct PCB *lead = queue->first->next;
+    queue->first = lead;
+    queue->last->next = lag;
+    queue->last = lag;
+    queue->last->next = NULL;
 }
