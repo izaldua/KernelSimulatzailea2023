@@ -42,9 +42,9 @@ int main(int argc, char *argv[])
         TTL = strtol(argv[4], NULL, 10);
     }
     
-    if (TTL < 20)
+    if (TTL < 15)
     {
-        printf("TTLa 20 baino handiagoa izan behar da\n");
+        printf("TTLa 15 baino handiagoa izan behar da\n");
         return 1;
     } 
 
@@ -121,33 +121,11 @@ int main(int argc, char *argv[])
     pthread_cond_destroy(&cond2);
     printf("Bigarren baldintza ondo amaitu da\n");
 
-    
-
     return 0;
 }
 
 void amaituProg(){
-    printf("\n\n");
+    printf("\nPrograma amaitzen\n");
 
-    // HARIEN testuinguru osoa hemen joineatzen da dena ondo amaitzeko
-    if (pthread_join(cl, NULL) != 0)
-        perror("Failed to join threads");
-    if (pthread_join(timSD, NULL) != 0)
-        perror("Failed to join threads");
-    if (pthread_join(timPG, NULL) != 0)
-        perror("Failed to join threads");
-    if (pthread_join(tSD, NULL) != 0)
-        perror("Failed to join threads");
-    if (pthread_join(tPG, NULL) != 0)
-        perror("Failed to join threads");
-
-    printf("\n\n");
-
-    // MUTEX-aren testuinguru osoa hemen amaitzen da dena suntsituz
-    pthread_mutex_destroy(&mutex);
-    printf("Mutexa ondo amaitu da\n");
-    pthread_cond_destroy(&cond1);
-    printf("Lehen baldintza ondo amaitu da\n");
-    pthread_cond_destroy(&cond2);
-    printf("Bigarren baldintza ondo amaitu da\n");
+    exit(0);
 } 
