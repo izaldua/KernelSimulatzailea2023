@@ -6,6 +6,8 @@
 #include "../include/config.h"
 #include "../include/PG.h"
 #include "../include/DatuEgiturak.h"
+#define AGINDU_KOP 3
+
 
 struct PCB* processCreate(int id, int state, int priority, int quantum, int TTL)
 {
@@ -37,7 +39,7 @@ void *processGenerator()
         sem_wait(&sem_pg);
 
         //printf("\nPG : %d", tick);
-        if (id < 5){
+        if (id < AGINDU_KOP){
             struct PCB *pcb = processCreate(id, 0, 0, 0, TTL);
             enqueue(&queue, pcb);
             id++;

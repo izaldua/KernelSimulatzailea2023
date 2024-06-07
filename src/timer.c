@@ -10,7 +10,7 @@
 sem_t sem_sc;
 sem_t sem_pg;
 
-void *timer_SD()
+void *timer_SD(long *SDF)
 {
     int frek = 0;
     int ticksd = 0;
@@ -20,19 +20,18 @@ void *timer_SD()
     {
         done++;
         ticksd++;
-        while (frek < 10000)
+        if (frek == *SDF)
         {
-            frek++;
-        }
-        sem_post(&sem_sc);
-        frek = 0;
+            sem_post(&sem_sc);
+            frek = 0;
+        } else frek++;
 
         pthread_cond_signal(&cond1);
         pthread_cond_wait(&cond2, &mutex);
     }
 }
 
-void *timer_PG()
+void *timer_PG(long *PGF)
 {
     printf("# Timer Process Generator: Ondo iritsi naiz timer-era.\n");
     int frek = 0;
@@ -42,12 +41,11 @@ void *timer_PG()
     {
         done++;
         tickpg++;
-        while (frek < 10000)
+        if (frek == *PGF)
         {
-            frek++;
-        }
-        sem_post(&sem_pg);
-        frek = 0;
+            sem_post(&sem_pg);
+            frek = 0;
+        } else frek++;
 
         pthread_cond_signal(&cond1);
         pthread_cond_wait(&cond2, &mutex);

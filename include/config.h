@@ -21,5 +21,6 @@ extern long PGF;
 extern int TTL;
 
 //extern struct ProcessQueue queue;
+void amaituProg();
 
 #endif /* CONFIG_H */

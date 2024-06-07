@@ -11,7 +11,7 @@ void prozesatu(struct ProcessQueue *queue)
 {
     struct PCB *pcb = peek(queue); 
     int denbora = pcb->quantum;
-    if (pcb != NULL)
+    if (pcb->id > -1)
     {
         printf("\nProzesatzen: id = %d, TTL = %d, quantuma = %d", pcb->id, pcb->TTL, pcb->quantum);
         //printf("\nHurrengo prozesua: id = %d, TTL = %d, quantuma = %d\n\n", peek(queue)->next->id, peek(queue)->next->TTL, peek(queue)->next->quantum);
@@ -30,7 +30,10 @@ void prozesatu(struct ProcessQueue *queue)
             dequeue(queue);
             free(pcb);
         } 
-    }
+    } else{
+        printf("\nAmaitzera itxaroten");
+        if (isEmpty(queue)) amaituProg();
+    } 
 }
 
 void *scheduler()

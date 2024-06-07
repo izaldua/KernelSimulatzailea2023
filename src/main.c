@@ -36,9 +36,9 @@ int main(int argc, char *argv[])
     }
     else
     {
-        clockF = 1000.0 * strtol(argv[1], NULL, 10);
-        SDF = 1000.0 * strtol(argv[2], NULL, 10);
-        PGF = 1000.0 * strtol(argv[3], NULL, 10);
+        clockF = 1.0 * strtol(argv[1], NULL, 10);
+        SDF = 1.0 * strtol(argv[2], NULL, 10);
+        PGF = 1.0 * strtol(argv[3], NULL, 10);
         TTL = strtol(argv[4], NULL, 10);
     }
     
@@ -77,12 +77,12 @@ int main(int argc, char *argv[])
 
     } // Hariak sortzeko momentuan existitzen badira dagoeneko, honek "errorea" bueltatuko du
 
-    if (pthread_create(&timSD, NULL, (void *)timer_SD, NULL) != 0)
+    if (pthread_create(&timSD, NULL, (void *)timer_SD, &SDF) != 0)
     {
         perror("Failed to create threads");
     }
 
-    if (pthread_create(&timPG, NULL, (void *)timer_PG, NULL) != 0)
+    if (pthread_create(&timPG, NULL, (void *)timer_PG, &PGF) != 0)
     {
         perror("Failed to create threads");
     }
@@ -121,5 +121,33 @@ int main(int argc, char *argv[])
     pthread_cond_destroy(&cond2);
     printf("Bigarren baldintza ondo amaitu da\n");
 
+    
+
     return 0;
 }
+
+void amaituProg(){
+    printf("\n\n");
+
+    // HARIEN testuinguru osoa hemen joineatzen da dena ondo amaitzeko
+    if (pthread_join(cl, NULL) != 0)
+        perror("Failed to join threads");
+    if (pthread_join(timSD, NULL) != 0)
+        perror("Failed to join threads");
+    if (pthread_join(timPG, NULL) != 0)
+        perror("Failed to join threads");
+    if (pthread_join(tSD, NULL) != 0)
+        perror("Failed to join threads");
+    if (pthread_join(tPG, NULL) != 0)
+        perror("Failed to join threads");
+
+    printf("\n\n");
+
+    // MUTEX-aren testuinguru osoa hemen amaitzen da dena suntsituz
+    pthread_mutex_destroy(&mutex);
+    printf("Mutexa ondo amaitu da\n");
+    pthread_cond_destroy(&cond1);
+    printf("Lehen baldintza ondo amaitu da\n");
+    pthread_cond_destroy(&cond2);
+    printf("Bigarren baldintza ondo amaitu da\n");
+} 
