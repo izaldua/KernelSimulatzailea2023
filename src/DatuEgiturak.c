@@ -7,6 +7,65 @@
 
 struct ProcessQueue queue;
 
+void initMachine(struct Machine *machine, int hariKop, int coreKop, int cpuKop)
+{
+    struct  CPU *cpu = (struct CPU *)malloc(sizeof(struct CPU));
+
+    cpu->next = NULL;
+    for (int i = 0; i < cpuKop; i++)
+    {
+        struct CPU *newCPU = (struct CPU *)malloc(sizeof(struct CPU));
+        newCPU->next = NULL;
+        cpu->next = newCPU;
+        cpu = newCPU;
+        struct Core *core = (struct Core *)malloc(sizeof(struct Core));
+        core->next = NULL;
+        cpu->first = core;
+        for (int j = 0; j < coreKop; j++)
+        {
+            struct Core *newCore = (struct Core *)malloc(sizeof(struct Core));
+            newCore->next = NULL;
+            core->next = newCore;
+            core = newCore;
+            struct Haria *haria = (struct Haria *)malloc(sizeof(struct Haria));
+            haria->next = NULL;
+            core->first = haria;
+            for (int k = 0; k < hariKop; k++)
+            {
+                struct Haria *newHaria = (struct Haria *)malloc(sizeof(struct Haria));
+                newHaria->next = NULL;
+                haria->next = newHaria;
+                haria = newHaria;
+            }
+        }
+    }
+}
+
+void destroyMachine(struct Machine *machine)
+{
+    struct CPU *cpu = machine->first;
+    while (cpu != NULL)
+    {
+        struct CPU *lagCPU = cpu;
+        struct Core *core = cpu->first;
+        while (core != NULL)
+        {
+            struct Core *lagCore = core;
+            struct Haria *haria = core->first;
+            while (haria != NULL)
+            {
+                struct Haria *lagHaria = haria;
+                haria = haria->next;
+                free(lagHaria);
+            }
+            core = core->next;
+            free(lagCore);
+        }
+        cpu = cpu->next;
+        free(lagCPU);
+    }
+}
+
 void aldatuTTL(struct ProcessQueue *queue, int TTL)
 {
     queue->first->TTL = TTL;

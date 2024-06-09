@@ -56,6 +56,9 @@ struct CPU;
 struct Core;
 struct Machine;
 
+void initMachine(struct Machine *machine, int cpuKop, int coreKop, int hariKop);
+void destroyMachine(struct Machine *machine);
+
 void aldatuTTL(struct ProcessQueue *queue, int TTL);
 void aldatuQuantum(struct ProcessQueue *queue);
 

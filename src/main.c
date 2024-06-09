@@ -15,11 +15,15 @@ int freq;
 long clockF, SDF, PGF;
 int TTL;
 
+int cpuKop, coreKop, hariKop;
+
 pthread_t cl, timSD, timPG, tSD, tPG;
 
 pthread_mutex_t mutex;
 
 pthread_cond_t cond1, cond2;
+
+struct Machine machine;
 
 int main(int argc, char *argv[])
 {
@@ -41,14 +45,37 @@ int main(int argc, char *argv[])
         PGF = 1.0 * strtol(argv[3], NULL, 10);
         TTL = strtol(argv[4], NULL, 10);
     }
-    
+
     if (TTL < 15)
     {
         printf("TTLa 15 baino handiagoa izan behar da\n");
         return 1;
     } 
 
+    printf("\n\nCPU kopurua sartu:\n");
+    if (scanf("%d", &cpuKop) != 1)
+    {
+        printf("Zenbaki bat sartu behar duzu\n");
+        return 1;
+    }
+    
+    printf("\n\nCore kopurua sartu:\n");
+    if (scanf("%d", &coreKop) != 1)
+    {
+        printf("Zenbaki bat sartu behar duzu\n");
+        return 1;
+    }
+    printf("\n\nCore kopurua sartu:\n");
+    if (scanf("%d", &hariKop) != 1)
+    {
+        printf("Zenbaki bat sartu behar duzu\n");
+        return 1;
+    }
+    printf("\n\n");
+
     printf("\n\n===========SISTEMA ONDO HASIERATUA===========\n\n");
+
+    initMachine(&machine, hariKop, coreKop, cpuKop);
 
     /*Gure ilara sortu eta abiarazi*/
     //struct ProcessQueue queue;
@@ -126,6 +153,8 @@ int main(int argc, char *argv[])
 
 void amaituProg(){
     printf("\nPrograma amaitzen\n");
+
+    destroyMachine(&machine);
 
     exit(0);
 } 
