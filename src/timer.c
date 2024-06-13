@@ -27,7 +27,9 @@ void *timer_SD(long *SDF)
         } else frek++;
 
         pthread_cond_signal(&cond1);
+        if (finalize) return 0;
         pthread_cond_wait(&cond2, &mutex);
+        if (finalize) return 0;
     }
 }
 
@@ -48,6 +50,8 @@ void *timer_PG(long *PGF)
         } else frek++;
 
         pthread_cond_signal(&cond1);
+        if (finalize) return 0;
         pthread_cond_wait(&cond2, &mutex);
+        if (finalize) return 0;
     }
 }

@@ -14,6 +14,7 @@ extern sem_t sem_pg;
 
 extern int done;
 extern int freq;
+extern int finalize;
 
 extern long clockF;
 extern long SDF;

@@ -44,6 +44,7 @@ void *processGenerator()
             enqueue(&queue, pcb);
             id++;
         } 
+        if (finalize) return 0;
         usleep(PGF);
 
         tick++;

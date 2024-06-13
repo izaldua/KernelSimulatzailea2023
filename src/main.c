@@ -10,6 +10,7 @@
 #include "../include/DatuEgiturak.h"
 
 int done = 0;
+int finalize = 0;
 int freq;
 
 long clockF, SDF, PGF;
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
         printf("Erloju, Scheduler eta Process Generator-aren frekuentzia ms-tan hartuko da.\n\n");
         printf("Frekuentzia = (Sartutako datua) * 1000\n\n");
         printf("=========================================================================\n\n");
-        return 1;
+        exit(-1);
     }
     else
     {
@@ -49,27 +50,27 @@ int main(int argc, char *argv[])
     if (TTL < 15)
     {
         printf("TTLa 15 baino handiagoa izan behar da\n");
-        return 1;
+        exit(-1);
     } 
 
     printf("\n\nCPU kopurua sartu:\n");
     if (scanf("%d", &cpuKop) != 1)
     {
         printf("Zenbaki bat sartu behar duzu\n");
-        return 1;
+        exit(-1);
     }
     
     printf("\n\nCore kopurua sartu:\n");
     if (scanf("%d", &coreKop) != 1)
     {
         printf("Zenbaki bat sartu behar duzu\n");
-        return 1;
+        exit(-1);
     }
     printf("\n\nCore kopurua sartu:\n");
     if (scanf("%d", &hariKop) != 1)
     {
         printf("Zenbaki bat sartu behar duzu\n");
-        return 1;
+        exit(-1);
     }
     printf("\n\n");
 
@@ -142,17 +143,17 @@ int main(int argc, char *argv[])
 
     // MUTEX-aren testuinguru osoa hemen amaitzen da dena suntsituz
     pthread_mutex_destroy(&mutex);
-    printf("Mutexa ondo amaitu da\n");
     pthread_cond_destroy(&cond1);
-    printf("Lehen baldintza ondo amaitu da\n");
     pthread_cond_destroy(&cond2);
-    printf("Bigarren baldintza ondo amaitu da\n");
 
     return 0;
 }
 
 void amaituProg(){
+
     printf("\nPrograma amaitzen\n");
+
+    finalize = 1;
 
     destroyMachine(&machine);
 

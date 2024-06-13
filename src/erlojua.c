@@ -18,6 +18,7 @@ void *erlojua()
             pthread_cond_wait(&cond1, &mutex);
             usleep(clockF);
         }
+        if (finalize) return 0;
         done = 0;
         pthread_cond_broadcast(&cond2);
         pthread_mutex_unlock(&mutex);
