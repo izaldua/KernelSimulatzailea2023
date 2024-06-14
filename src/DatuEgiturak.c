@@ -66,6 +66,23 @@ void destroyMachine(struct Machine *machine)
     }
 }
 
+uint32_t* init_orria(){
+    uint32_t* orria = (uint32_t *) malloc (10 * sizeof(uint32_t));
+    if (orria == NULL){
+        printf("\nErrorea orria hasieratzeko orduan\n");
+        exit(1);
+    } 
+
+    for (int i = 0; i < 10; i++) orria[i] = 0;  
+
+    return orria;   
+} 
+
+void free_orria(uint32_t *orria){
+    free(orria);
+    orria = NULL;
+} 
+
 uint32_t* init_erregistroak (){
     uint32_t* erregistroa = (uint32_t *) malloc (16 * sizeof(uint32_t)); 
 
@@ -75,6 +92,8 @@ uint32_t* init_erregistroak (){
     } 
 
     for (int i = 0; i < 16; i++) erregistroa[i] = 0; 
+
+    return erregistroa;
 } 
 
 void free_erregistroak (uint32_t *erregistroa){
