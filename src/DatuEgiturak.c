@@ -66,6 +66,22 @@ void destroyMachine(struct Machine *machine)
     }
 }
 
+uint32_t* init_erregistroak (){
+    uint32_t* erregistroa = (uint32_t *) malloc (16 * sizeof(uint32_t)); 
+
+    if (erregistroa == NULL){
+        printf("\nErrorea erregistroak hasieratzeko orduan\n");
+        exit(1);
+    } 
+
+    for (int i = 0; i < 16; i++) erregistroa[i] = 0; 
+} 
+
+void free_erregistroak (uint32_t *erregistroa){
+    free(erregistroa);
+    erregistroa = NULL;
+} 
+
 void aldatuTTL(struct ProcessQueue *queue, int TTL)
 {
     queue->first->TTL = TTL;
